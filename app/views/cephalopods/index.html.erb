@@ -1,0 +1,29 @@
+<h1>Listing cephalopods</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Tentacles</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cephalopods.each do |cephalopod| %>
+      <tr>
+        <td><%= cephalopod.name %></td>
+        <td><%= cephalopod.tentacles %></td>
+        <td><%= link_to 'Show', cephalopod %></td>
+        <td><%= link_to 'Edit', edit_cephalopod_path(cephalopod) %></td>
+        <td><%= link_to 'Destroy', cephalopod, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cephalopod', new_cephalopod_path %>

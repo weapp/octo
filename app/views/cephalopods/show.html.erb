@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cephalopod.name %>
+</p>
+
+<p>
+  <strong>Tentacles:</strong>
+  <%= @cephalopod.tentacles %>
+</p>
+
+<%= link_to 'Edit', edit_cephalopod_path(@cephalopod) %> |
+<%= link_to 'Back', cephalopods_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@cephalopod) do |f| %>
+  <% if @cephalopod.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cephalopod.errors.count, "error") %> prohibited this cephalopod from being saved:</h2>
+
+      <ul>
+      <% @cephalopod.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :tentacles %><br>
+    <%= f.number_field :tentacles %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
