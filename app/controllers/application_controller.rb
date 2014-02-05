@@ -3,27 +3,38 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def shard_file
+    'config/shards.yml'
+  end
+
+  def shard_chache_time
+    50.seconds
+  end
 
   def load_shard_value
-    "#{Random.rand(1000)} - #{last_sync}"
+    File.read(File.expand_path(shard_file, Rails.root))
   end
 
   def get_shard_value
-    @shard
+    return @shard if @shard
+    unless cached
+      update_last_sync
+      ENV['shard'] = "#{load_shard_value}"
+    end
+    @shard = HashWithIndifferentAccess.new(YAML.load(ENV['shard']))[:octopus][:development]
   end
 
   before_action :reconfigure_shards
 
   def reconfigure_shards
-    unless cached
-      update_last_sync
-      ENV['shard'] = "#{load_shard_value}"
-    end
-    @shard = ENV['shard']
+    sh = get_shard_value
+    Octopus.shards = sh
+    ActiveRecord::Base.connection.initialize_replication(sh)
+    ActiveRecord::Base.connection.instance_eval{@slave_index = Random.rand(0...sh.count)}
   end
 
   def cached
-    last_sync && last_sync > 15.seconds.ago
+    last_sync && last_sync > shard_chache_time.ago
   end
 
   def last_sync

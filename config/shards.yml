@@ -7,15 +7,15 @@ octopus:
       adapter: mysql
       host: slave1.localhost
       database: octo_dev
-    slave2:
-      adapter: mysql
-      host: slave2.localhost
-      database: octo_dev
-    slave3:
-      adapter: mysql
-      host: slave3.localhost
-      database: octo_dev
-    slave4:
-      adapter: mysql
-      host: slave4.localhost
-      database: octo_dev
+    # slave2:
+    #   adapter: mysql
+    #   host: slave2.localhost
+    #   database: octo_dev
+    # slave3:
+    #   adapter: mysql
+    #   host: slave3.localhost
+    #   database: octo_dev
+    # slave4:
+    #   adapter: mysql
+    #   host: slave4.localhost
+    #   database: octo_dev
