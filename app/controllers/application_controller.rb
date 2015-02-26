@@ -31,6 +31,13 @@ class ApplicationController < ActionController::Base
     Octopus.shards = sh
     ActiveRecord::Base.connection.initialize_replication(sh)
     ActiveRecord::Base.connection.instance_eval{@slave_index = Random.rand(0...sh.count)}
+
+    Cephalopod.first
+    conn = Thread.current[:'octopus.current_model'].connection
+    @lcs = conn.instance_variables.inject({})do |memo, var|
+      memo[var] = conn.instance_variable_get(var)
+      memo
+    end
   end
 
   def cached
